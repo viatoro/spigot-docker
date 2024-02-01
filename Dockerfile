@@ -1,5 +1,5 @@
 # Use OpenJDK JDK image for intermiediate build
-FROM eclipse-temurin:17-jdk-ubi9-minimal AS build
+FROM eclipse-temurin:17-jdk-jammy AS build
 
 # Build from source and create artifact
 WORKDIR /src
@@ -14,7 +14,7 @@ ADD https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/artifact
 RUN MAVEN_OPTS="-Xmx2G" java -Xmx2G -jar BuildTools.jar
 
 # Use OpenJDK JRE image for runtime
-FROM eclipse-temurin:17-jre-ubi9-minimal AS run
+FROM eclipse-temurin:17-jre-jammy AS run
 
 
 # Copy artifact from build image
