@@ -4,10 +4,13 @@ FROM eclipse-temurin:17-jdk-jammy AS build
 # Build from source and create artifact
 WORKDIR /src
 RUN set -eux; \
-    microdnf install -y \
+    apt-get update; \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
         git \
     ; \
-    microdnf clean all
+    echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen; \
+    locale-gen en_US.UTF-8; \
+    rm -rf /var/lib/apt/lists/*
 
 
 ADD https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/artifact/target/BuildTools.jar BuildTools.jar
