@@ -1,13 +1,10 @@
 name: ci
-
 on:
   push:
     branches:
       - "main"
-
 env:
   REGISTRY_IMAGE: viatoro/spigot
-
 jobs:
   build:
     runs-on: ubuntu-latest
