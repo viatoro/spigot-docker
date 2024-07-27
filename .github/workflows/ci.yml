@@ -24,11 +24,18 @@ jobs:
         name: Checkout
         uses: actions/checkout@v4
       -
+        name: Get git commit hash
+        id: get_commit
+        run: echo "COMMIT_HASH=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+      -
         name: Docker meta
         id: meta
         uses: docker/metadata-action@v5
         with:
           images: ${{ env.REGISTRY_IMAGE }}
+          tags: |
+            latest
+            ${{ env.COMMIT_HASH }}
       -
         name: Set up QEMU
         uses: docker/setup-qemu-action@v3
@@ -49,7 +56,10 @@ jobs:
           context: .
           platforms: ${{ matrix.platform }}
           labels: ${{ steps.meta.outputs.labels }}
-          outputs: type=image,name=${{ env.REGISTRY_IMAGE }},push-by-digest=true,name-canonical=true,push=true
+          tags: |
+            ${{ env.REGISTRY_IMAGE }}:latest
+            ${{ env.REGISTRY_IMAGE }}:${{ env.COMMIT_HASH }}
+          push: true
       -
         name: Export digest
         run: |
@@ -126,4 +136,5 @@ jobs:
       -
         name: Push image
         run: |
-          docker push ${{ env.REGISTRY_IMAGE }}:${{ steps.meta.outputs.version }}
+          docker push ${{ env.REGISTRY_IMAGE }}:latest
+          docker push ${{ env.REGISTRY_IMAGE }}:${{ env.COMMIT_HASH }}
