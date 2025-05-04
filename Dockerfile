@@ -40,6 +40,9 @@ VOLUME /data /opt/minecraft
 # Set runtime workdir
 WORKDIR /data
 
+# Copy entrypoint script
+COPY --chown=minecraft:minecraft entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
 # Run app
-ENTRYPOINT ["java"]
-CMD [ "-jar","-Xms2G", "-Xmx2G", "-XX:+UseG1GC", "/app/spigot.jar", "nogui" ]
+ENTRYPOINT ["/entrypoint.sh"]
