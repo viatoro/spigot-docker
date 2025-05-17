@@ -1,7 +1,7 @@
 /.idea/
 data
 plugins
-worlds
+/worlds
 BuildTools.jar
 BuildTools.log.txt
 work
@@ -15,4 +15,4 @@ logs
 bundler
 eula.txt
 server.properties
-world-test
+/world-test
