@@ -2,3 +2,17 @@
 data
 plugins
 worlds
+BuildTools.jar
+BuildTools.log.txt
+work
+Spigot
+CraftBukkit
+Bukkit
+BuildData
+apache-maven-3.9.6
+spigot-*
+logs
+bundler
+eula.txt
+server.properties
+world-test

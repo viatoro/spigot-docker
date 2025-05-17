@@ -1,5 +1,5 @@
 # Use OpenJDK JDK image for intermiediate build
-FROM eclipse-temurin:21-jdk-jammy AS build
+FROM eclipse-temurin:24-jdk-jammy AS build
 
 # Build from source and create artifact
 WORKDIR /src
@@ -17,7 +17,7 @@ ADD https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/artifact
 RUN MAVEN_OPTS="-Xmx2G" java -Xmx2G -jar BuildTools.jar
 
 # Use OpenJDK JRE image for runtime
-FROM eclipse-temurin:21-jre-jammy AS run
+FROM eclipse-temurin:24-jre-jammy AS run
 
 
 # Copy artifact from build image
@@ -28,11 +28,11 @@ COPY --from=build /src/spigot-*.jar /app/spigot.jar
 EXPOSE 25565
 EXPOSE 25575
 EXPOSE 19132
-#RUN groupadd -r -g 1000 minecraft \
-#    && useradd -r -u 1000 -g minecraft -m -d /opt/minecraft -s /bin/bash minecraft
+RUN groupadd -r -g 1000 minecraft \
+    && useradd -r -u 1000 -g minecraft -m -d /opt/minecraft -s /bin/bash minecraft
 
 # User and group to run as
-#USER minecraft:minecraft
+USER minecraft:minecraft
 
 # Volumes
 VOLUME /data /opt/minecraft
@@ -41,7 +41,7 @@ VOLUME /data /opt/minecraft
 WORKDIR /data
 
 # Copy entrypoint script
-COPY entrypoint.sh /entrypoint.sh
+COPY --chown=minecraft:minecraft entrypoint.sh /entrypoint.sh
 
 # Run app
 ENTRYPOINT ["/entrypoint.sh"]
