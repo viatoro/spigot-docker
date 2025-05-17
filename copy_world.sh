@@ -40,6 +40,7 @@ if [ $? -eq 0 ]; then
         echo "Docker Compose เริ่มต้นสำเร็จ"
     else
         echo "เกิดข้อผิดพลาดในการเริ่มต้น Docker Compose"
+        # docker restart "w$(printf "%05d" $new_num)-spigot-1"
         exit 1
     fi
 else
