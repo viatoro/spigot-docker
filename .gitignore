@@ -1,6 +1,6 @@
 /.idea/
-data
-plugins
+/data
+/plugins
 /worlds
 BuildTools.jar
 BuildTools.log.txt
