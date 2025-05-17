@@ -28,11 +28,11 @@ COPY --from=build /src/spigot-*.jar /app/spigot.jar
 EXPOSE 25565
 EXPOSE 25575
 EXPOSE 19132
-RUN groupadd -r -g 1000 minecraft \
-    && useradd -r -u 1000 -g minecraft -m -d /opt/minecraft -s /bin/bash minecraft
+#RUN groupadd -r -g 1000 minecraft \
+#    && useradd -r -u 1000 -g minecraft -m -d /opt/minecraft -s /bin/bash minecraft
 
 # User and group to run as
-USER minecraft:minecraft
+#USER minecraft:minecraft
 
 # Volumes
 VOLUME /data /opt/minecraft
@@ -41,8 +41,7 @@ VOLUME /data /opt/minecraft
 WORKDIR /data
 
 # Copy entrypoint script
-COPY --chown=minecraft:minecraft entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
+COPY entrypoint.sh /entrypoint.sh
 
 # Run app
 ENTRYPOINT ["/entrypoint.sh"]
