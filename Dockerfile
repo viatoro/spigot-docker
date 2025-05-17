@@ -20,9 +20,6 @@ RUN MAVEN_OPTS="-Xmx2G" java -Xmx2G -jar BuildTools.jar
 FROM eclipse-temurin:24-jre-jammy AS run
 
 
-# Copy artifact from build image
-COPY --from=build /src/spigot-*.jar /app/spigot.jar
-
 # Create minecraft u
 # Ports
 EXPOSE 25565
@@ -42,6 +39,8 @@ WORKDIR /data
 
 # Copy entrypoint script
 COPY --chown=minecraft:minecraft entrypoint.sh /entrypoint.sh
+
+COPY --from=build --chown=minecraft:minecraft /src/spigot-*.jar /app/spigot.jar
 
 # Run app
 ENTRYPOINT ["/entrypoint.sh"]
