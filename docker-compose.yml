@@ -7,7 +7,6 @@ services:
       - "25565:25565"  # Minecraft server port
     volumes:
       - ./data:/data  # Mount server data directory
-      - ./plugins:/data/plugins  # Mount plugins directory
     environment:
       - EULA=TRUE
       - MEMORY=2G

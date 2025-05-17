@@ -24,7 +24,7 @@ new_dir="$DEST_DIR/w$(printf "%05d" $new_num)"
 
 # คัดลอกโฟลเดอร์
 echo "กำลังคัดลอก $SOURCE_DIR ไปยัง $new_dir"
-mkdir -p "$new_dir"
+cp -r "$SOURCE_DIR" "$new_dir"
 cp Dockerfile "$new_dir"
 cp entrypoint.sh "$new_dir"
 cp docker-compose.yml "$new_dir"
